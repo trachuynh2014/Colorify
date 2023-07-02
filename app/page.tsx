@@ -4,18 +4,19 @@ import React, { useState } from "react";
 import Loading from "@/components/loading";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [companyName, setCompanyName] = useState("Twitter");
+  const [companyName, setCompanyName] = useState("Airbnb");
   const [loading, setLoading] = useState(false);
   const [colors, setColors] = useState([
-    "#1DA1F2",
-    "#14171A",
-    "#657786",
-    "#AAB8C2",
-    "#E1E8ED",
-    "#F5F8FA",
-  ]); // Twitter default
+    "#FF5A5F", // Red
+    "#FFB400", // Yellow
+    "#007A87", // Teal
+    "#00A699", // Dark Teal
+    "#3DCC91", // Green
+  ]); // Airbnb default
+  const router = useRouter();
 
   const callChatGPT = () => {
     setLoading(true);
@@ -30,6 +31,7 @@ export default function Home() {
       .catch((err) => {
         console.log(err.message);
         toast.error("Something went wrong!");
+        router.refresh();
       });
   };
 
@@ -42,14 +44,14 @@ export default function Home() {
     <>
       <main>
         <div className="fixed top-20 lg:top-10 left-1/2 -translate-x-1/2">
-          <div className="h-12 w-full rounded-md bg-gradient-to-r from-[#C6FFDD] via-[#FBD786] to-[#f7797d] p-1">
+          <div className="h-12 w-full rounded-md bg-gradient-to-r from-[#8EA6DB] via-[#ADC7E6] to-[#B1D2ED] p-1">
             <div className="relative">
               <input
                 type="text"
                 onChange={(e) => setCompanyName(e.target.value)}
                 value={companyName}
                 className="py-2 px-4 pr-[4.5rem] w-80 lg:w-96 focus:outline-none rounded"
-                placeholder="Company name (or anything you want to know its color palette) (e.g. Twitter)"
+                placeholder="Company name (e.g. Twitter)"
                 onKeyDown={(e) => (e.key === "Enter" ? callChatGPT() : null)}
               />
               <kbd
